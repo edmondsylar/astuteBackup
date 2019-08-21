@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * This is the model class for table "a_service_intelligence_packs".
+ *
+ * The followings are the available columns in table 'a_service_intelligence_packs':
+ * @property string $serviceIntelligencePackUuid
+ * @property string $serviceUuid
+ * @property string $intelligencePackUuid
+ * @property string $status
+ * @property string $updatedBy
+ * @property string $updatedOn
+ */
+class AServiceIntelligencePacks extends CActiveRecord
+{
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'a_service_intelligence_packs';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('serviceIntelligencePackUuid, serviceUuid, intelligencePackUuid, updatedBy, updatedOn', 'required'),
+			array('serviceIntelligencePackUuid, serviceUuid, intelligencePackUuid, updatedBy', 'length', 'max'=>25),
+			array('status', 'length', 'max'=>1),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('serviceIntelligencePackUuid, serviceUuid, intelligencePackUuid, status, updatedBy, updatedOn', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'serviceIntelligencePackUuid' => 'Service Intelligence Pack Uuid',
+			'serviceUuid' => 'Service Uuid',
+			'intelligencePackUuid' => 'Intelligence Pack Uuid',
+			'status' => 'Status',
+			'updatedBy' => 'Updated By',
+			'updatedOn' => 'Updated On',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('serviceIntelligencePackUuid',$this->serviceIntelligencePackUuid,true);
+		$criteria->compare('serviceUuid',$this->serviceUuid,true);
+		$criteria->compare('intelligencePackUuid',$this->intelligencePackUuid,true);
+		$criteria->compare('status',$this->status,true);
+		$criteria->compare('updatedBy',$this->updatedBy,true);
+		$criteria->compare('updatedOn',$this->updatedOn,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return AServiceIntelligencePacks the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}

@@ -1,0 +1,269 @@
+<?php
+$userid      = Yii::app()->user->userUuid;
+$userValue   = TUsers::model()->findByAttributes(array('userUuid' => $userid));
+$currentUser = $userValue['username'];
+$nameFetch   = TUsersRegister::model()->findByAttributes(array('email' => $currentUser));
+$CurrentName = $nameFetch['names'];
+
+?>
+
+    <div class="sidebar-profile" style="margin: -15px; position: relative;">
+      <div class="sidebar-profile-image">
+        <img src="assets/images/profile-image.png" class="circle" alt="">
+      </div>
+      <div class="sidebar-profile-info">
+        <a href="javascript:void(0);" class="account-settings-link">
+          <p><?php echo $CurrentName?></p>
+          <span><?php echo $currentUser?><i class="material-icons right">arrow_drop_down</i></span>
+        </a>
+      </div>
+    </div>
+
+<?php
+$controller = $this->id;
+//Yii::app()->controller->id;
+
+$action   = $this->action->id;//pages
+$userperm = Yii::app()->user->userperm;
+
+//$allowpeopleaccess = array('KD003', 'WA002', 'MP001', 'WT007');
+$allowpeopleaccess         = array("KD003", "WA002", "WT007", "MP001", "MY004", "PO008");
+$allowlicenceaccess        = array("KD003", "WA002", "WT007", "MP001", "MY004", "PO008");
+$alloworganizationaccess   = array("KD003", "WA002", "MP001", "MY004", "LN008", "PO008");
+$allowpositionsaccess      = array("KD003", "WA002", "MP001", "MY004", "LN008", "PO008");
+$allowfunctionsaccess      = array("KD003", "WA002", "MP001", "MY004", "LN008", "PO008");
+$allowusermanagementaccess = array("KD003", "WA002");
+$allowsettingsaccess       = array("KD003", "WA002");
+$allowedusers1             = array("2", "3", "4", "5", "6", "7", "8", "9", "10");
+$allowadmin                = array("9", "10");
+
+//set menu arrays
+//      dashboard menu
+$dashboard_array  = array("user");
+$dashboard_status = '';
+$dashboard_color  = '';
+
+//      settings menu
+$setting_array  = array("settings/panel");
+$setting_status = '';
+$setting_color  = '';
+
+//      people menu
+$people_array  = array("people/panel", "people/politicallyExposed");
+$people_status = '';
+$people_color  = '';
+
+//      organisation menu
+$organisation_array  = array("organisation/organizations");
+$organisation_status = '';
+$organisation_color  = '';
+
+//      position menu
+$position_array  = array("organisation/positions");
+$position_status = '';
+$position_color  = '';
+
+//      function menu
+$function_array  = array("organisation/functions");
+$function_status = '';
+$function_color  = '';
+
+//      incident menu
+$incident_array  = array("incident/incidentReport");
+$incident_status = '';
+$incident_color  = '';
+
+//      media menu
+$media_array  = array("media/adverseMedia");
+$media_status = '';
+$media_color  = '';
+
+//      licences menu
+$licence_array  = array("licences/licencesClient");
+$licence_status = '';
+$licence_color  = '';
+
+//      business menu
+$business_array  = array("business/businesses");
+$business_status = '';
+$business_color  = '';
+
+//      services menu
+$services_array  = array("services/service");
+$services_status = '';
+$services_color  = '';
+
+//     tasks menu
+$tasks_array  = array("task/tasks");
+$tasks_status = '';
+$tasks_color  = '';
+
+//user management menu
+$usermanagement_array  = array("usermanager/panel");
+$usermanagement_status = '';
+$usermanagement_color  = '';
+
+$intelligence_array  = array("intelligence");
+$intelligence_status = '';
+$intelligence_color  = '';
+
+if (in_array($controller, $dashboard_array)) {
+	$dashboard_status = 'active';
+	$dashboard_color  = 'cyan-text';
+} elseif (in_array($controller, $organisation_array)) {
+	$organisation_status = 'active';
+	$organisation_color  = 'cyan-text';
+} elseif (in_array($controller, $people_array)) {
+	$people_status = 'active';
+	$people_color  = 'cyan-text';
+} elseif (in_array($controller, $position_array)) {
+	$position_status = 'active';
+	$position_color  = 'cyan-text';
+} elseif (in_array($controller, $function_array)) {
+	$function_status = 'active';
+	$function_color  = 'cyan-text';
+} elseif (in_array($controller, $incident_array)) {
+	$incident_status = 'active';
+	$incident_color  = 'cyan-text';
+} elseif (in_array($controller, $setting_array)) {
+	$setting_status = 'active';
+	$setting_color  = 'cyan-text';
+} elseif (in_array($controller, $licence_array)) {
+	$licence_status = 'active';
+	$licence_color  = 'cyan-text';
+} elseif (in_array($controller, $media_array)) {
+	$media_status = 'active';
+	$media_color  = 'cyan-text';
+} elseif (in_array($controller, $usermanagement_array)) {
+	$usermanagement_status = 'active';
+	$usermanagement_color  = 'cyan-text';
+} elseif (in_array($controller, $business_array)) {
+	$business_status = 'active';
+	$business_color  = 'cyan-text';
+} elseif (in_array($controller, $services_array)) {
+	$services_status = 'active';
+	$services_color  = 'cyan-text';
+} elseif (in_array($controller, $intelligence_array)) {
+	$intelligence_status = 'active';
+	$intelligence_color  = 'cyan-text';
+}
+?>
+
+<li style="margin-top: 15px;" class="no-padding <?php echo $dashboard_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	    <?php echo CHtml::link('<i class="material-icons">dashboard</i>Dashboard', array('user/panel'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$dashboard_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Dashboard</a>
+	<?php }?>
+</li>
+
+
+
+<li class="no-padding <?php echo $services_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	        <?php echo CHtml::link('<i class="material-icons">store</i>Services', array('services/service'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$services_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Services</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $business_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	  <?php echo CHtml::link('<i class="material-icons">business</i>Business', array('business/businesses'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$business_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#"> <i class="material-icons">settings_input_svideo</i> Business</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $tasks_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	        <?php echo CHtml::link('<i class="material-icons">store</i>Task', array('Task/'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$tasks_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Task</a>
+	<?php }?>
+</li>
+
+
+<li class="no-padding <?php echo $people_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	        <?php echo CHtml::link('<i class="material-icons">info</i>Intelligence', array('intelligence/'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$people_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">People</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $incident_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	    <?php echo CHtml::link('<i class="material-icons">report_problem</i>Incidents', array('incident/incidentReport'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$incident_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Incident</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $usermanagement_status;?>">
+<?php if (in_array("$userperm", $allowadmin)) {?>
+	        <?php echo CHtml::link('<i class="material-icons">supervisor_account</i>User Management', array('usermanager/panel'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$usermanagement_color));?>
+	    <?php } else {?>
+
+	<?php }?>
+</li>
+<hr class="grey-text">
+<li class="no-padding <?php echo $people_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	        <?php echo CHtml::link('People', array('people/politicallyExposed'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$people_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">People</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $organisation_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	        <?php echo CHtml::link('Organizations', array('organisation/organizations'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$organisation_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Organizations</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $media_status;?>">
+<?php if (in_array("$userperm", $allowedusers1)) {?>
+	    <?php echo CHtml::link('Media', array('media/adverseMedia'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$media_color));?>
+	    <?php } else {?>
+	<a class="grey-text"href="#">Media</a>
+	<?php }?>
+</li>
+
+<li class="no-padding <?php echo $setting_status;?>">
+<?php if (in_array("$userperm", $allowadmin)) {?>
+	    <?php echo CHtml::link('Settings', array('settings/panel'), $htmlOptions = array('class' => 'waves-effect waves-grey '.$setting_color));?>
+	    <?php } else {?>
+
+	<?php }?>
+</li>
+
+
+
+<!--<li class="no-padding --><?php //echo $licence_status; ?><!--">-->
+<!--    --><?php ////if (in_array("$userid", $allowlicenceaccess)) {  ?>
+<!--    --><?php //echo CHtml::link('Licences', array('licences/licencesClient'), $htmlOptions = array('class' => 'waves-effect waves-grey ' . $licence_color)); ?>
+<!--    --><?php //// } else { ?>
+<!--    <a class="grey-text"href="#">licences</a>-->
+<!--    --><?php // //}  ?>
+<!--</li>-->
+<!---->
+<!---->
+<!---->
+<!--<li class="no-padding --><?php ////echo $function_status; ?><!--">-->
+<!--    --><?php ////if (in_array("$userid", $allowfunctionsaccess)) { ?>
+<!--        --><?php ////echo CHtml::link('Functions', array('organisation/functions'), $htmlOptions = array('class' => 'waves-effect waves-grey ' . $function_color)); ?>
+<!--    --><?php//// } else { ?>
+<!--        <a class="grey-text"href="#">Functions</a>-->
+<!--    --><?php ////} ?>
+<!--</li>-->
+<!---->
+<!--<li class="no-padding --><?php // echo $position_status;  ?><!--">-->
+<?php // if (in_array("$userid", $allowpositionsaccess)) {  ?>
+<?php // echo CHtml::link('Positions', array('organisation/positions'), $htmlOptions = array('class' => 'waves-effect waves-grey ' . $position_color)); ?>
+<?php // } else { ?>
+<!--<a class="grey-text"href="#">Positions</a>-->
+<?php // }  ?>
+<!--</li>-->
